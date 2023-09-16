@@ -1,0 +1,25 @@
+server:
+  port: 8000
+
+spring:
+  jpa:
+    database-platform: com.Eragoo.fulltexttest.config.CustomPostgreSQLDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        query:
+          fail_on_pagination_over_collection_fetch: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+  application:
+    name: core-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/core
+    username: ${DB_USER:core}
+    password: ${DB_PASS:pass}
+    hikari:
+      connection-timeout: 5000
