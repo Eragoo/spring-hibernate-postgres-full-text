@@ -1,17 +1,15 @@
 package com.Eragoo.fulltexttest.product;
 
-import com.vladmihalcea.hibernate.type.search.PostgreSQLTSVectorType;
+import io.hypersistence.utils.hibernate.type.search.PostgreSQLTSVectorType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.Instant;
 
 
-@TypeDef(name = "tsvector", typeClass = PostgreSQLTSVectorType.class)
 @Getter
 @Setter
 @Entity
@@ -28,7 +26,7 @@ public class Product {
 
     private Instant createdAt;
 
-    @Type(type = "tsvector")
+    @Type(PostgreSQLTSVectorType.class)
     @Column(name = "title_search_vector",columnDefinition = "tsvector")
     private String titleSearchVector;
 }

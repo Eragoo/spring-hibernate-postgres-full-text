@@ -1,11 +1,21 @@
 package com.Eragoo.fulltexttest.config;
 
 
-import org.hibernate.dialect.PostgreSQL82Dialect;
+import org.hibernate.boot.model.FunctionContributions;
+import org.hibernate.dialect.PostgreSQLDialect;
 
-public class CustomPostgreSQLDialect extends PostgreSQL82Dialect {
+public class CustomPostgreSQLDialect extends PostgreSQLDialect {
     public CustomPostgreSQLDialect() {
         super();
-        registerFunction("tsvector_match", new TsVectorMatchExpression());
+    }
+
+    @Override
+    public void initializeFunctionRegistry(FunctionContributions functionContributions) {
+        super.initializeFunctionRegistry(functionContributions);
+        var functionRegistry = functionContributions.getFunctionRegistry();
+        functionRegistry.registerPattern(
+                "tsvector_match",
+                "(?1 @@ ?2)"
+        );
     }
 }
